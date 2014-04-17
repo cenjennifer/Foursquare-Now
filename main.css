@@ -1,0 +1,17 @@
+.container{
+ width: 600px;
+ margin: 3em auto;
+}
+.intro{
+	text-align: center;
+}
+input{
+	height: 20px;
+}
+.hidden{
+	/*display: none;*/
+}
+#header1{
+	text-align: center;
+	
+}

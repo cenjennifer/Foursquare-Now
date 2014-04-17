@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Trending Today!</title>
+	<link rel="stylesheet" href="main.css">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="app.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class ="intro">
+			<h1>FourSquare Today</h1>
+			<p>Don't Miss out! Find the Top 4 Check-In Spots Near You!</p>
+			<p> Date: </p>
+		</div>
+		<hr>
+		<div class = "searchinputs">
+			<form class="location" onsubmit="return false;">
+					<input type="text" placeholder = "Location" name="locations" size ="70" required>
+					<input type = "submit" value ="Search">
+			</form>
+		</div>
+
+		<h1 id="header1">Top 4 Check-In Spots...</h1>
+		<div class= "results-container">
+			<div class = "results"></div>
+		</div>
+	</div>		
+		<div class="templates hidden">
+				<dl class="result checkin">
+					<dt>Image 1</dt>
+						<dd><a href ="" target="_blank"></a></dd>
+					<div class="details">
+						<dt>Name of Location:</dt>
+							<dd class= ""></dd>
+						<dt>Number of Check-ins:<dt>
+							<dd></dd>
+						<dt>Address:</dt>	
+							<dd></dd>
+						<dt>Venue Type:</dt>
+							<dd></dd>	
+					</div>
+				</dl>
+				<div class="error">
+					<p>Uh-oh! Something went wrong with your request. Here's what we know:</p>
+				</div>
+		</div>				
+</body>
+</html>		
