@@ -8,10 +8,31 @@
 input{
 	height: 20px;
 }
-.hidden{
-	/*display: none;*/
-}
 #header1{
-	text-align: center;
-	
+	text-align: center;	
+}
+.location{
+	position:static;
+	margin-left: 360px;
+	margin-right:360px;
+}
+.venueDetail{
+	width: 550px;
+ 	margin: auto;	
+}
+.venueIcon{
+	width:1050px;
+	margin: auto;	
+}
+.icon{
+	padding:2px;
+}
+.herenow{
+	margin-left: 15px;
+}
+.checkins{
+	margin-left:7px; 
+}
+.error{
+	display: none;
 }
