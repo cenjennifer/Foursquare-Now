@@ -17,7 +17,7 @@ $(document).ready( function() {
 
 
 function showData(response){
-    $('#venueResult').html('');
+    $('.venueDetail').html('');
 		for(var i=0; i<response.response.venues.length; i++){
 			var venueLat = response.response.venues[i].location.lat;
 			var venueLng = response.response.venues[i].location.lng;
@@ -41,23 +41,18 @@ function showData(response){
 		
 			var venueidHTML = "<div class='venueID-field'>"+ venueID + "</div>";
 			var venueHTML = "<a href=" + URL + "><div class='venueName-field'><h2>" +[i+1]+ ".  " + venueName + "</h2></div></a>";
-			var addressHTML = "<div class='address-field'><h3>"+ address + " " + city + ", " + state + " " + zipcode+"</h3></div>";
-			var categoryHTML = "<div class='category-field'><p>(" + category + ")</p></div>";
-			var checkinHTML = "<p class='herenow'>Here Now: " + venueHereNow +"<span class='checkins'>Checkins: " + checkins + "</span></p>";
+			var addressHTML = "<div class='address-field'>"+ address + " " + city + ", " + state + " " + zipcode+"</div>";
+			var categoryHTML = "<div class='category-field'>" + category + "</div>";
+			var checkinHTML = "<div class='herenow'>Here Now: " + venueHereNow +"</div> <div class='checkins'>Checkins: " + checkins + "</div>";
 			var venueiconHTML = "<img class='icon' src=" + venueIcon + ">";
-			$(".venueDetail").append(venueHTML + "<p>" + checkinHTML + "</p>" + "<p>" + addressHTML + "</p>" + "<p>" + categoryHTML + "</p>");
-			$(".venueIcon").append(venueiconHTML);
-			//$(".placeName").append(venueHTML);
-			//$(".numberCheckin").append(checkinHTML);
-			//$(".venueAddress").append(addressHTML);
-			//$(".venueType").append(categoryHTML);
-	}
+			
+			$(".venueDetail").append("<div class = 'venueTitle'>" +venueHTML + addressHTML + "</div><div class='venueIcon_category'>" + venueiconHTML +"<span class= 'checkin-herenow'><p>" +checkinHTML +"</p></span>" + categoryHTML + "</div>");
+			}
 }
-
 	var getData = function(latLng){
 		var lat = latLng.lat();
 		var lng = latLng.lng();
-		var url = "https://api.foursquare.com/v2/venues/trending?ll=" + lat + ',' + lng + "&limit=17&radius=5000&" +clientID + "&" + clientSecret + "&" + dateVerified;
+		var url = "https://api.foursquare.com/v2/venues/trending?ll=" + lat + ',' + lng + "&limit=16&radius=5000&" +clientID + "&" + clientSecret + "&" + dateVerified;
 		console.log(url);
 	$.ajax({
 		type:"GET",
@@ -69,44 +64,24 @@ function showData(response){
 			showData(response);
 		}
 	});
-};
-	$("#geocode-search").submit( function(event){
+	};
+var initialize = function(latLng){
+    geocoder = new google.maps.Geocoder();
+    getData(latLng);
+	};
+$(".location").submit(function(event){
 	var address = $("#address").val();
-	console.log(address);
+	//console.log(address);
 
 	geocoder.geocode({'address': address}, function(results, status){
 		if(status == google.maps.GeocoderStatus.OK){
 			latLng = results[0].geometry.location;
 			initialize(latLng);
-			console.log(initalize(latLng));
 		}
 		else{
 			alert('Geocode Unsuccessful: ' +status);
 		}
 		});
 });
-	var initialize = function(latLng){
-    geocoder = new google.maps.Geocoder();
-    getData(latLng);
-	};
-initialize(latLng);
+initialize(latLng).focus();
 });
-
-//var venuePhoto = response.response.venues[i].id.photos;
-//var venuephotoHTML = "<div class='venuePhoto'>" + venuePhoto + "</div>";
-//$(".venueImage").append(venuephotoHTML);
-/*var getPhoto = function(){
-		var id = venueID.val;
-		var url = "https://api.foursquare.com/v2/venues/" + id + "/photos?limit=4&" +clientID + "&" + clientSecret + "&" + dateVerified;
-	$.ajax({
-		type:"GET",
-		dataType: "jsonp",
-		cache:false,
-		url:url,
-		success: function(response){
-			getPhoto(response);
-		}
-	});
-};
-getPhoto();
-*/
