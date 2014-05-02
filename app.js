@@ -40,13 +40,14 @@ function showData(response){
 				var zipcode = response.response.venues[i].location.postalCode;
 		
 			var venueidHTML = "<div class='venueID-field'>"+ venueID + "</div>";
-			var venueHTML = "<a href=" + URL + "><div class='venueName-field'><h2>" +[i+1]+ ".  " + venueName + "</h2></div></a>";
+			var venueHTML = "<a href=" + URL + "target='_blank'><div class='venueName-field'><h2>" +[i+1]+ ".  " + venueName + "</h2></div></a>";
+			
 			var addressHTML = "<div class='address-field'>"+ address + " " + city + ", " + state + " " + zipcode+"</div>";
 			var categoryHTML = "<div class='category-field'>" + category + "</div>";
 			var checkinHTML = "<div class='herenow'>Here Now: " + venueHereNow +"</div> <div class='checkins'>Checkins: " + checkins + "</div>";
 			var venueiconHTML = "<img class='icon' src=" + venueIcon + ">";
 			
-			$(".venueDetail").append("<div class = 'venueTitle'>" +venueHTML + addressHTML + "</div><div class='venueIcon_category'>" + venueiconHTML +"<span class= 'checkin-herenow'><p>" +checkinHTML +"</p></span>" + categoryHTML + "</div>");
+			$(".venueDetail").append("<div class = 'venueTitle'>" + venueHTML + addressHTML + "</div><div class='venueIcon_category'>" + venueiconHTML +"<span class= 'checkin-herenow'><p>" +checkinHTML +"</p></span>" + categoryHTML + "</div>");
 			}
 }
 	var getData = function(latLng){
