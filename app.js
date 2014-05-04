@@ -40,7 +40,7 @@ function showData(response){
 				var zipcode = response.response.venues[i].location.postalCode;
 		
 			var venueidHTML = "<div class='venueID-field'>"+ venueID + "</div>";
-			var venueHTML = "<a href=" + URL + "target='_blank'><div class='venueName-field'><h2>" +[i+1]+ ".  " + venueName + "</h2></div></a>";
+			var venueHTML = "<a target='_blank' href=" + URL + "><div class='venueName-field'><h2>" +[i+1]+ ".  " + venueName + "</h2></div></a>";
 			
 			var addressHTML = "<div class='address-field'>"+ address + " " + city + ", " + state + " " + zipcode+"</div>";
 			var categoryHTML = "<div class='category-field'>" + category + "</div>";
