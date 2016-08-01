@@ -1,88 +1,99 @@
-$(document).ready( function() {
-	//google geocoding API
-	var API_KEY="AIzaSyBst2dLYUIyELQrZMKtKg8QqSJ-1SDIFZk";
-	//foursquare API
-    var oauthToken= "oauth_token=ES11ZGZLL5T2RXXBJAZCYDIDNEXCRIMZ5ZLVBA2W3MQJQARA";
-    var clientID = "client_id=VBJLVDU1E2LGY5YRSU2GA5OPVUU5KNQVAOFWNPM5CCQHLIH0";
-    var clientSecret = "client_secret=ES11ZGZLL5T2RXXBJAZCYDIDNEXCRIMZ5ZLVBA2W3MQJQARA";
-    var dateVerified = "v=20140423";
+$(document).ready(function() {
+    //google geocoding API
+    const API_KEY = "AIzaSyBst2dLYUIyELQrZMKtKg8QqSJ-1SDIFZk";
 
-    //variables
-    var locations = [];
-    var venueName = "";
-    var venueID = "";
-    console.log(venueID);
-    var geocoder;
-    var latLng = new google.maps.LatLng(40.7127,-74.0059);
+    //foursquare api
+    const apicredentials = {
+        clientID: "client_id=VBJLVDU1E2LGY5YRSU2GA5OPVUU5KNQVAOFWNPM5CCQHLIH0",
+        clientSecret: "client_secret=ES11ZGZLL5T2RXXBJAZCYDIDNEXCRIMZ5ZLVBA2W3MQJQARA",
+        dateVerified: "v=20140423"
+    };
+
+    var locations = [],
+        venueName = "",
+        venueID = "",
+        geocoder,
+        latLng = new google.maps.LatLng(40.7127, -74.0059); //default NYC
 
 
-function showData(response){
-    $('.venueDetail').html('');
-		for(var i=0; i<response.response.venues.length; i++){
-			var venueLat = response.response.venues[i].location.lat;
-			var venueLng = response.response.venues[i].location.lng;
-			var venueHereNow = response.response.venues[i].hereNow.count;
-				
-				locations[i] = {};
-				locations[i].lat = venueLat;
-				locations[i].lng = venueLng;
+    function showData(response) {
+        for (let i = 0; i < response.length; i++) {
+            let venueLat = response[i].location.lat;
+            let venueLng = response[i].location.lng;
+            let venueHereNow = response[i].hereNow.count;
 
-				venueName = response.response.venues[i].name;
-				venueID = response.response.venues[i].id;
-				var URL = response.response.venues[i].url;
-				var checkins = response.response.venues[i].stats.checkinsCount;
-				
-				var category = response.response.venues[i].categories[0].name;
-				var venueIcon = response.response.venues[i].categories[0].icon.prefix+"bg_64.png";
-				var address = response.response.venues[i].location.address;
-				var city =  response.response.venues[i].location.city;
-				var state = response.response.venues[i].location.state;
-				var zipcode = response.response.venues[i].location.postalCode;
-		
-			var venueidHTML = "<div class='venueID-field'>"+ venueID + "</div>";
-			var venueHTML = "<a target='_blank' href=" + URL + "><div class='venueName-field'><h2>" +[i+1]+ ".  " + venueName + "</h2></div></a>";
-			
-			var addressHTML = "<div class='address-field'>"+ address + " " + city + ", " + state + " " + zipcode+"</div>";
-			var categoryHTML = "<div class='category-field'>" + category + "</div>";
-			var checkinHTML = "<div class='herenow'>Here Now: " + venueHereNow +"</div> <div class='checkins'>Checkins: " + checkins + "</div>";
-			var venueiconHTML = "<img class='icon' src=" + venueIcon + ">";
-			
-			$(".venueDetail").append("<div class = 'venueTitle'>" + venueHTML + addressHTML + "</div><div class='venueIcon_category'>" + venueiconHTML +"<span class= 'checkin-herenow'><p>" +checkinHTML +"</p></span>" + categoryHTML + "</div>");
-			}
-}
-	var getData = function(latLng){
-		var lat = latLng.lat();
-		var lng = latLng.lng();
-		var url = "https://api.foursquare.com/v2/venues/trending?ll=" + lat + ',' + lng + "&limit=16&radius=5000&" +clientID + "&" + clientSecret + "&" + dateVerified;
-		console.log(url);
-	$.ajax({
-		type:"GET",
-		dataType:"jsonp",
-		cache:false,
-		url:url,
-		success: function(response){
-			console.log(response);
-			showData(response);
-		}
-	});
-	};
-var initialize = function(latLng){
-    geocoder = new google.maps.Geocoder();
-    getData(latLng);
-	};
-$(".location").submit(function(event){
-	var address = $("#address").val();
-	//console.log(address);
+            locations.push({
+                lat: venueLat,
+                lng: venueLng
+            });
 
-	geocoder.geocode({'address': address}, function(results, status){
-		if(status == google.maps.GeocoderStatus.OK){
-			latLng = results[0].geometry.location;
-			initialize(latLng);
-		}
-		else{
-			alert('Geocode Unsuccessful: ' +status);
-		}
-		});
-});
-initialize(latLng).focus();
+            venueName = response[i].name;
+            var URL = "https://www.foursquare.com/v/" + response[i].id;
+            var checkins = response[i].stats.checkinsCount;
+
+            var category = response[i].categories[0].name;
+            var venueIcon = response[i].categories[0].icon.prefix + "bg_64.png";
+            var address = !response[i].location.address ? "" : response[i].location.address;
+
+            var city = !response[i].location.city ? "" : response[i].location.city;
+            var state = !response[i].location.state ? "" : response[i].location.state;
+            var zipcode = !response[i].location.postalCode ? "" : response[i].location.postalCode;
+
+            var venueHTML = "<a target='_blank' href=" + URL + "><h2>" + [i + 1] + ".  " + venueName + "</h2></a>";
+
+            var addressHTML = "<div>" + address + " " + city + " " + state + " " + zipcode + "</div>";
+            var categoryHTML = "<div>" + category + "</div>";
+            var checkinHTML = "<div>Here Now: " + venueHereNow + "</div><div>Total Check-ins: " + checkins + "</div>";
+            var venueiconHTML = "<img class='icon' src=" + venueIcon + ">";
+
+            $('.venueDetail').append("<div class='place'>" + venueHTML + addressHTML + '<div>' + venueiconHTML + checkinHTML + categoryHTML + "</div></div>");
+            $(".place > div > div:not(:first-child)").addClass("place-detail");
+            $(".place > div > div:last-child").css("color", "gray");
+        }
+    }
+
+    var getData = function(latLng) {
+        var lat = latLng.lat();
+        var lng = latLng.lng();
+        var url = "https://api.foursquare.com/v2/venues/trending?ll=" + lat + ',' + lng + "&limit=16&radius=5000&" + apicredentials.clientID + "&" + apicredentials.clientSecret + "&" + apicredentials.dateVerified;
+
+        $.ajax({
+            type: "GET",
+            dataType: "jsonp",
+            cache: false,
+            url: url,
+            success: function(response) {
+                console.log(response)
+                var res = response.response.venues;
+                if (res.length) {
+                    $('#no-match').hide();
+                    $('.venueDetail').show();
+                    $('.venueDetail').html('');
+                    showData(res);
+                } else {
+                    $('#no-match').show();
+                    $('.venueDetail').hide();
+                }
+
+            }
+        });
+    };
+    var initialize = function(latLng) {
+        geocoder = new google.maps.Geocoder();
+        getData(latLng);
+    };
+
+    $("form").submit(function(event) {
+        var address = $("#address").val();
+
+        geocoder.geocode({ 'address': address }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                latLng = results[0].geometry.location;
+                initialize(latLng);
+            } else {
+                alert('Geocode Unsuccessful: ' + status);
+            }
+        });
+    });
+    initialize(latLng).focus();
 });
