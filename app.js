@@ -28,7 +28,7 @@ $(document).ready(function() {
             });
 
             venueName = response[i].name;
-            var URL = !response[i].url ? "" : response[i].url;
+            var URL = "https://www.foursquare.com/v/" + response[i].id;
             var checkins = response[i].stats.checkinsCount;
 
             var category = response[i].categories[0].name;
@@ -63,6 +63,7 @@ $(document).ready(function() {
             cache: false,
             url: url,
             success: function(response) {
+                console.log(response)
                 var res = response.response.venues;
                 if (res.length) {
                     $('#no-match').hide();
