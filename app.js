@@ -51,11 +51,11 @@ $(document).ready(function() {
             $(".place > div > div:last-child").css("color", "gray");
         }
     }
-
+    var foursquareCred = apicredentials.clientID + "&" + apicredentials.clientSecret + "&" + apicredentials.dateVerified;
     var getData = function(latLng) {
         var lat = latLng.lat();
         var lng = latLng.lng();
-        var url = "https://api.foursquare.com/v2/venues/trending?ll=" + lat + ',' + lng + "&limit=16&radius=5000&" + apicredentials.clientID + "&" + apicredentials.clientSecret + "&" + apicredentials.dateVerified;
+        var url = "https://api.foursquare.com/v2/venues/trending?ll=" + lat + ',' + lng + "&limit=16&radius=5000&" + foursquareCred;
 
         $.ajax({
             type: "GET",

@@ -42,7 +42,7 @@ p {
 }
 
 input {
-    padding: 0px 10px;
+    padding: 0 10px;
 }
 
 a {
@@ -51,16 +51,12 @@ a {
 }
 
 a:hover {
-    color: #23c9a7;
-}
-
-a:visited {
     color: #8e96d1;
 }
 
 form {
     margin: 0 auto;
-    width: 40%;
+    width: 250px;
 }
 
 form > div {
@@ -111,11 +107,11 @@ img {
 }
 
 #venueData {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .place {
-    height: 150px;
+    padding-bottom: 40px;
 }
 
 .place-detail {
@@ -124,8 +120,8 @@ img {
 }
 
 .venueDetail {
-    position: relative;
-    left: 150px;
+    width: 400px;
+    margin: 0 auto;
 }
 
 .icon {
@@ -138,4 +134,10 @@ img {
     text-align: center;
     font-size: 20px;
     color:gray;
+}
+@media (max-width: 600px) {
+    .container{
+        width: 100%;
+    }
+
 }
