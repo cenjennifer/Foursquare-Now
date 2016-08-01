@@ -135,7 +135,7 @@ img {
     font-size: 20px;
     color:gray;
 }
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     .container{
         width: 100%;
     }
